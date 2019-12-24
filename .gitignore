@@ -118,6 +118,6 @@ cpython-36
 *.code-workspace
 
 # images
-.jpg
-.jpeg
-.png
+*.jpg
+*.jpeg
+*.png

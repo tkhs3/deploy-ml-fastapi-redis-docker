@@ -83,7 +83,7 @@ class processor():
         return d
 
     @staticmethod
-    def _decode_contents(val_encoded):
+    def _decode_contents(val_json):
         val = json.loads(val_json)
         return val
 
