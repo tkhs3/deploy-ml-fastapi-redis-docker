@@ -6,18 +6,12 @@ import os
 import time
 import uuid
 
-# from keras.preprocessing.image import img_to_array
-# from keras.applications import imagenet_utils
 import numpy as np
 from PIL import Image
 import redis
 
 from fastapi import FastAPI, File, HTTPException
 from starlette.requests import Request
-
-# app = FastAPI()
-# db = redis.StrictRedis(host=os.environ.get("REDIS_HOST"))
-# CLIENT_MAX_TRIES = int(os.environ.get("CLIENT_MAX_TRIES"))
 
 
 class processor():
@@ -37,20 +31,6 @@ class processor():
         __class__.db = db
         __class__.app = app
 
-        # set attribute for extended class
-        # if me is not None:
-        #     __class__.me = me
-        #     __class__.me.db = db
-        #     __class__.me.app = app
-
-    # @staticmethod
-    # def register_route(app=None):
-    #     """register routing
-    #     """
-    #     app = app or __class__.me.app
-    #     __class__.me.index = app.get("/")(__class__.me._index)
-    #     __class__.me.predict = app.post("/predict")(__class__.me._predict)
-
     @staticmethod
     def _preprocess_image(image, target):
         # If the image mode is not RGB, convert it
@@ -61,7 +41,7 @@ class processor():
         image = image.resize(target)
         image = np.array(image)
         # image = img_to_array(image)
-        image = np.expand_dims(image, axis=0)
+        # image = np.expand_dims(image, axis=0)
         # image = imagenet_utils.preprocess_input(image)
 
         # Ensure our NumPy array is C-contiguous as well, otherwise we won't be able to serialize it
@@ -85,21 +65,6 @@ class processor():
                             )
         return image
 
-    # @staticmethod
-    # def update_env_var(
-    #     list_name_env_int=[]
-    #     ,list_name_env_float=[]
-    #     ,list_name_env_str=[]
-    # ):
-    #     """update environmental variable
-    #     """
-
-    #     # define variable in global scope
-    #     _def_global = " ".join([
-    #         "global", list_name_env_int, list_name_env_float, list_name_env_str
-    #     ])
-    #     exec(_def_global)
-
     @staticmethod
     def _encode_contents(val):
         val_encoded = base64.b64encode(val).decode("utf-8")
@@ -119,7 +84,6 @@ class processor():
 
     @staticmethod
     def _decode_contents(val_encoded):
-        val_json = val_encoded.decode("utf-8")
         val = json.loads(val_json)
         return val
 
