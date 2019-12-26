@@ -13,6 +13,8 @@ import redis
 from fastapi import FastAPI, File, HTTPException
 from starlette.requests import Request
 
+from . import utils as servingtools
+
 
 class processor():
 
@@ -67,7 +69,8 @@ class processor():
 
     @staticmethod
     def _encode_contents(val):
-        val_encoded = base64.b64encode(val).decode("utf-8")
+        val_encoded = servingtools.base64_encode_image(val)
+        # val_encoded = base64.b64encode(val).decode("utf-8")
         return val_encoded
 
     @staticmethod
