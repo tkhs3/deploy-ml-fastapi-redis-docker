@@ -120,6 +120,8 @@ class processor():
         while True:
 
             queues = __class__.me._fetch_queues()
+            if len(queues) == 0:
+                continue
 
             list_id, samples = __class__.me._decode_queues(queues)
 
@@ -127,7 +129,10 @@ class processor():
             if len(list_id) > 0:
 
                 # Classify the batch
-                print("* Batch size: {}".format(samples.shape))
+                if isinstance(samples, np.ndarray):
+                    print("* Batch size: {}".format(samples.shape))
+                else:
+                    print("* Batch size: {}".format(len(list_id)))
                 preds = __class__.me._predict_on_samples(samples)
 
                 results = __class__.me._postprocess_samples(preds)
