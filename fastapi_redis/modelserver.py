@@ -98,7 +98,9 @@ class processor():
         while True:
 
             queues = __class__.me._fetch_queues()
+
             if len(queues) == 0:
+                time.sleep(float(os.environ.get("SERVER_SLEEP")))
                 continue
 
             list_id, samples = __class__.me._decode_queues(queues)
